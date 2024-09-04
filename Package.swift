@@ -24,11 +24,6 @@ let package = Package(
                 .product(name: "ReluxRouter", package: "swiftui-reluxrouter"),
             ],
             path: "Sources"
-        ),
-        .testTarget(
-            name: "SwiftUIReluxTests",
-            dependencies: ["SwiftUIRelux"],
-            path: "Tests"
-        ),
+        )
     ]
 )
