@@ -1,6 +1,6 @@
 import SwiftUI
 import Relux
-import ReluxRouter
+@_exported import ReluxRouter
 
 public extension View {
     @MainActor
