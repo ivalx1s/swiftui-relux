@@ -13,7 +13,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/ivalx1s/darwin-relux.git", .upToNextMajor(from: "5.0.2")),
+        .package(url: "https://github.com/ivalx1s/darwin-relux.git", .upToNextMajor(from: "5.1.0")),
         .package(url: "https://github.com/ivalx1s/swiftui-reluxrouter.git", .upToNextMajor(from: "3.0.2"))
     ],
     targets: [
