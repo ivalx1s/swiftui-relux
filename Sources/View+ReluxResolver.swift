@@ -2,11 +2,16 @@ import SwiftUI
 import Relux
 
 public extension View {
-    /*
-     view invocer behaves as simple splash view without any Relux context
-     awaits for relux being resolved and passes it to content view builder
-     also passes observables from relux store to environment of the content view
-     */
+    /// Creates a view that resolves and provides a Relux instance.
+    ///
+    /// This modifier wrap a view into a resolver that manages the asynchronous loading of a Relux instance.
+    /// It displays the parent view as a splash screen while Relux is being resolved,
+    /// then switches to the content view once Relux is available.
+    ///
+    /// - Parameters:
+    ///   - content: A view builder closure that takes the resolved Relux instance and returns the content view.
+    ///   - resolver: An asynchronous closure that resolves and returns the Relux instance.
+    /// - Returns: A view that handles the resolution of Relux and displays the appropriate content.
     func resolvedRelux<Content: View>(
         @ViewBuilder content: @escaping (Relux) -> Content,
         resolver: @escaping () async -> Relux
@@ -22,11 +27,11 @@ public extension View {
 
 
 extension Relux {
-    /*
-     awaits for relux being resolved and passes it to content view builder
-     also passes observables from relux store to environment of the content view
-     splash view behaves as simple splash view without any Relux context
-     */
+    /// A view that handles the resolution of a Relux instance and displays appropriate content.
+    ///
+    /// `Resolver` manages the lifecycle of asynchronously loading a Relux instance:
+    /// 1. Initially displays a splash view while resolving the Relux instance
+    /// 2. Once resolved, displays the content view and injects Relux observables into the environment
     public struct Resolver<Splash: View, Content: View>: View {
         @SwiftUI.State private var resolved: Relux?
 
@@ -34,6 +39,12 @@ extension Relux {
         @ViewBuilder private let content: (Relux) -> Content
         private let resolver: () async -> Relux
 
+        /// Creates a new Resolver that handles Relux resolution.
+        ///
+        /// - Parameters:
+        ///   - splash: A view builder closure that returns the splash view to display while resolving.
+        ///   - content: A view builder closure that takes the resolved Relux instance and returns the content view.
+        ///   - resolver: An asynchronous closure that resolves and returns the Relux instance.
         init(
             @ViewBuilder splash: @escaping () -> Splash,
             @ViewBuilder content: @escaping (Relux) -> Content,
@@ -44,6 +55,12 @@ extension Relux {
             self.resolver = resolver
         }
 
+        /// Creates a new Resolver that handles Relux resolution.
+        ///
+        /// - Parameters:
+        ///   - splash: A view builder closure that returns the splash view to display while resolving.
+        ///   - content: A view builder closure that takes the resolved Relux instance and returns the content view.
+        ///   - resolver: An asynchronous closure that resolves and returns the Relux instance.
         public var body: some View {
             VStack {
                 switch resolved {
