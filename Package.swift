@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 import PackageDescription
 
 let package = Package(
@@ -13,8 +13,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/ivalx1s/darwin-relux.git", .upToNextMajor(from: "6.0.0")),
-        .package(url: "https://github.com/ivalx1s/swiftui-reluxrouter.git", .upToNextMajor(from: "5.0.0"))
+        .package(url: "https://github.com/ivalx1s/darwin-relux.git", .upToNextMajor(from: "7.0.1")),
+        .package(url: "https://github.com/ivalx1s/swiftui-reluxrouter.git", .upToNextMajor(from: "6.0.1"))
     ],
     targets: [
         .target(

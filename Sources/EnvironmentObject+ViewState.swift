@@ -7,17 +7,12 @@ public extension View {
     func passingObservableToEnvironment(fromStore store: Relux.Store) -> some View {
         var view: any View = self
 
-        let routers = store
-            .routers
-            .values
-            .map { $0 as Any }
-
         let uistates = store
-            .uistates
+            .states
             .values
             .map { $0 as Any }
 
-        passToEnvironment(inView: &view, objects: routers + uistates)
+        passToEnvironment(inView: &view, objects: uistates)
 
         return AnyView(view)
     }
