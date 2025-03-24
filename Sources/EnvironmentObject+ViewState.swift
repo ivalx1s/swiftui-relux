@@ -8,7 +8,7 @@ public extension View {
         var view: any View = self
 
         let uistates = store
-            .states
+            .uiStates
             .values
             .map { $0 as Any }
 
