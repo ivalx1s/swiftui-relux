@@ -1,5 +1,5 @@
 import Relux
 
 extension Relux {
-    enum UI {}
+    public enum UI {}
 }
