@@ -45,7 +45,7 @@ extension Relux {
         ///   - splash: A view builder closure that returns the splash view to display while resolving.
         ///   - content: A view builder closure that takes the resolved Relux instance and returns the content view.
         ///   - resolver: An asynchronous closure that resolves and returns the Relux instance.
-        init(
+        public init(
             @ViewBuilder splash: @escaping () -> Splash,
             @ViewBuilder content: @escaping (Relux) -> Content,
             resolver: @escaping () async -> Relux
