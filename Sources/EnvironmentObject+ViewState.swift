@@ -3,20 +3,18 @@ import Relux
 @_exported import ReluxRouter
 
 public extension View {
+    /// Injects observable states and relays from the store into the SwiftUI environment.
+    /// - Parameter store: The Relux store containing UI states and relays.
+    /// - Returns: A view with states and relays injected as environment objects.
     @MainActor
     func passingObservableToEnvironment(fromStore store: Relux.Store) -> some View {
         var view: any View = self
 
-        let uistates = store
-            .uiStates
-            .values
-            .map { $0 as Any }
-
-        passToEnvironment(inView: &view, objects: uistates)
+        let observables: [Any] = store.uiStates.values.map { $0 } + store.relays.values.map { $0 }
+        passToEnvironment(inView: &view, objects: observables)
 
         return AnyView(view)
     }
-
 
     @MainActor
     private func passToEnvironment(inView view: inout any View, objects: [Any]) {
