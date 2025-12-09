@@ -1,4 +1,5 @@
+import SwiftUI
 
 public extension Relux.UI {
-    protocol ViewProps: Equatable, Hashable, Sendable {}
+    protocol    : DynamicProperty, Equatable, Hashable, Sendable {}
 }
