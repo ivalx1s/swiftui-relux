@@ -8,6 +8,7 @@
 
 // MARK: - Modern Implementation of ViewCallbacks with parameter packs in generic parameters (iOS 17+)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+@available(*, deprecated, message: "Highly Experimental: ViewAction is subject to breaking, use ViewCallback")
 public extension Relux.UI {
     struct ViewAction<each Input: Sendable>: Sendable, Equatable, Identifiable {
         
@@ -23,7 +24,6 @@ public extension Relux.UI {
         
         public let id: CallSite
         
-        // ✨ The Magic: Storing the parameter pack directly
         private let action: @Sendable (repeat each Input) async -> Void
         
         public init(
