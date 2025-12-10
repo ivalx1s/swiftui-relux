@@ -20,19 +20,39 @@ public extension View {
 
     @MainActor
     private func passToEnvironment(inView view: inout any View, objects: [Any]) {
-        objects
-            .forEach { object in
-                if let observableObj = object as? (any ObservableObject) {
-                    debugPrint("[ReluxRootView] passing \(observableObj) as ObservableObject to SwiftUI environment")
-                    view = view.environmentObject(observableObj)
-                }
+        if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
+            passEnvironmentObjectsAndObservables(inView: &view, objects: objects)
+        } else {
+            passEnvironmentObjectsOnly(inView: &view, objects: objects)
+        }
+    }
 
-                if #available(iOS 17, *) {
-                    if let observable = object as? (any Observable & AnyObject) {
-                        debugPrint("[ReluxRootView] passing \(observable) as Observable to SwiftUI environment")
-                        view = view.environment(observable)
-                    }
-                }
+
+    @MainActor
+    @available(iOS 16, macOS 13, tvOS 16, watchOS 9, *)
+    private func passEnvironmentObjectsOnly(inView view: inout any View, objects: [Any]) {
+        objects.forEach { object in
+            if let observableObj = object as? (any ObservableObject) {
+                debugPrint("[ReluxRootView] passing \(observableObj) as ObservableObject to SwiftUI environment")
+                view = view.environmentObject(observableObj)
             }
+        }
+    }
+
+
+    @MainActor
+    @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
+    private func passEnvironmentObjectsAndObservables(inView view: inout any View, objects: [Any]) {
+        objects.forEach { object in
+            if let observableObj = object as? (any ObservableObject) {
+                debugPrint("[ReluxRootView] passing \(observableObj) as ObservableObject to SwiftUI environment")
+                view = view.environmentObject(observableObj)
+            }
+
+            if let observable = object as? (any Observable & AnyObject) {
+                debugPrint("[ReluxRootView] passing \(observable) as Observable to SwiftUI environment")
+                view = view.environment(observable)
+            }
+        }
     }
 }
