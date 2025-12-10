@@ -35,8 +35,8 @@ extension Relux {
     public struct Resolver<Splash: View, Content: View>: View {
         @SwiftUI.State private var resolved: Relux?
 
-        @ViewBuilder private let splash: () -> Splash
-        @ViewBuilder private let content: (Relux) -> Content
+        private let splash: Splash
+        private let content: (Relux) -> Content
         private let resolver: () async -> Relux
 
         /// Creates a new Resolver that handles Relux resolution.
@@ -50,7 +50,7 @@ extension Relux {
             @ViewBuilder content: @escaping (Relux) -> Content,
             resolver: @escaping () async -> Relux
         ) {
-            self.splash = splash
+            self.splash = splash()
             self.content = content
             self.resolver = resolver
         }
@@ -65,7 +65,7 @@ extension Relux {
             VStack {
                 switch resolved {
                     case .none:
-                        splash()
+                        splash
                             .task {
                                 self.resolved = await resolver()
                             }

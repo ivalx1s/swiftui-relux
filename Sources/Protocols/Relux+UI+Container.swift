@@ -2,5 +2,5 @@ import Relux
 import SwiftUI
 
 extension Relux.UI {
-    public protocol Container: View {}
+    public protocol Container: SwiftUI.View {}
 }
