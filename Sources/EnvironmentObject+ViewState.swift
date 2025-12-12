@@ -9,8 +9,12 @@ public extension View {
     @MainActor
     func passingObservableToEnvironment(fromStore store: Relux.Store) -> some View {
         var view: any View = self
-
-        let observables: [Any] = store.uiStates.values.map { $0 } + store.relays.values.map { $0 }
+        
+        let observables: [Any] =
+        store.uiStates.values.map { $0 } +
+        store.relays.values.map { $0 } +
+        store.actionRelays.values.map { $0 }
+        
         passToEnvironment(inView: &view, objects: observables)
 
         return AnyView(view)
